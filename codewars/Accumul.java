@@ -1,3 +1,5 @@
+
+
 public class Accumul {
     
     public static String accum(String s) {
@@ -8,6 +10,14 @@ public class Accumul {
         }
         return result;
     }
+
+    // did not work; check it out:
+    // public static String alternAccum(String s) {
+    //     String result;
+    //     String[] elems = s.split(" ");
+    //     result = IntStream.range(0, s.length()).mapToObj(i -> elems[i].toUpperCase() + elems[i]toLowerCase().repeat(i)).collect(Collectors.joining("-"));
+    //     return s;
+    // }
 
     public static void main(String[] args) {
         System.out.println(accum("abcd"));
