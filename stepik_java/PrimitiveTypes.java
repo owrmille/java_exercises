@@ -15,14 +15,31 @@ public class PrimitiveTypes {
     }
 
     public static int flipBit(int value, int bitIndex) {
-        return value ^ (int)Math.pow(2.0, (double)bitIndex);
+        return value ^ (int)Math.pow(2.0, (double)(bitIndex - 1));
+        // return value ^ 1 << bitIndex - 1;  // another solution
+    }
+
+    public static char charExpression(int a) {
+        return (char)('\\' + a);
+    }
+    
+    /**
+     * Checks if given <code>value</code> is a power of two.
+     *
+     * @param value any number
+     * @return <code>true</code> when <code>value</code> is power of two, <code>false</code> otherwise
+     */
+    public static boolean isPowerOfTwo(int value) {
+        return (value != 0 && (Math.abs(value) & (Math.abs(value) - 1)) == 0);
+        // return Integer.bitCount(Math.abs(value)) == 1;  // another solution
     }
 
     public static void main(String[] args) {
-        double hey = 0x0bp3;
         System.out.println(booleanExpression(true, false, false, true));
         System.out.println(leapYearCount(100));
         System.out.println(doubleExpression(0.000001, 0.000002, 0.000003));
-        System.out.println(flipBit(42, 3));
+        System.out.println(flipBit(0, 1));
+        System.out.println(charExpression(6));
+        System.out.println(isPowerOfTwo(-2));
     }
 }
