@@ -1,7 +1,12 @@
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -64,12 +69,34 @@ public class StreamApiExercises {
         }
     }
 
-    public static void main(String[] args) {
-        pseudoRandomStream(13).limit(12).forEach(System.out::println);
+    public static void displayMostFrequentWords() {
+        try (Scanner scanner  = new Scanner(System.in, StandardCharsets.UTF_8)) {
+            String input = scanner.nextLine();
+            Map<String, Long> frequencyMap = Arrays.stream(input.split("[^a-zA-Zа-яА-Я0-9]+"))
+                                                    .map(String::toLowerCase)
+                                                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+                frequencyMap.entrySet()
+                            .stream()
+                            .sorted((x, y) -> {
+                                if (x.getValue().compareTo(y.getValue()) == 0) return x.getKey().compareTo(y.getKey());
+                                else return y.getValue().compareTo(x.getValue());
+                            })
+                            .limit(10)
+                            .forEach(x -> System.out.println(x.getKey()));
+        }
+    }
 
-        IntStream stream = pseudoRandomStream(13);
-        Comparator<Integer> order = Comparator.naturalOrder();
-        BiConsumer<Integer, Integer> minMaxConsumer = (min, max) -> {System.out.println("Min: " + min + ", Max: " + max);};
-        alternativeFindMinMax(stream.limit(12).boxed(), order, minMaxConsumer);
+    public static void main(String[] args) {
+        //pseudoRandomStream(13).limit(12).forEach(System.out::println);
+        
+        // try (IntStream stream = pseudoRandomStream(13)) {
+        //     Comparator<Integer> order = Comparator.naturalOrder();
+        //     BiConsumer<Integer, Integer> minMaxConsumer = (min, max) -> {
+        //         System.out.println("Min: " + min + ", Max: " + max); 
+        //     };
+        //     alternativeFindMinMax(stream.limit(12).boxed(), order, minMaxConsumer);
+        // }
+
+        displayMostFrequentWords();
     }
 }
