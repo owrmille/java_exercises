@@ -45,6 +45,14 @@ public class TreeTraversal {
         }
     }
 
+    public static Node<Integer> simpleDfs(Node<Integer> root, int target) {
+        if (root == null) return null;
+        if (root.val == target) return root;
+        Node<Integer> left = simpleDfs(root.left, target);
+        if (left != null) return left;
+        return simpleDfs(root.right, target);
+    }
+
     public static <T> Node<T> buildTree(Iterator<String> iter, Function<String, T> f) {
         String val = iter.next();
         if (val.equals("x")) return null;
@@ -67,5 +75,6 @@ public class TreeTraversal {
         preOrderTraversal(root);
         System.out.println("Post-order Traversal:");
         postOrderTraversal(root);
+        System.out.println("Simple DFS: " + simpleDfs(root, 7).val);
     }
 }
