@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+import java.util.function.Function;
+
+public class InsertIntoBst {
+    public static class Node<T> {
+        public T val;
+        public Node<T> left;
+        public Node<T> right;
+
+        public Node(T val) {
+            this(val, null, null);
+        }
+
+        public Node(T val, Node<T> left, Node<T> right) 
+        {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public static Node<Integer> insertBst(Node<Integer> tree, int newVal) {
+        if (tree == null) {
+            return new Node<>(newVal);
+        }
+        int compareVal = tree.val.compareTo(newVal);
+        if (compareVal < 0) {
+            tree.right = insertBst(tree.right, newVal);
+        } else if (compareVal > 0) {
+            tree.left = insertBst(tree.left, newVal);
+        }
+        return tree;
+    }
+
+    public static List<String> splitWords(String s) {
+        return s.isEmpty() ? List.of() : Arrays.asList(s.split(" "));
+    }
+
+    public static <T> Node<T> buildTree(Iterator<String> iter, Function<String, T> f) {
+        String val = iter.next();
+        if (val.equals("x")) return null;
+        Node<T> left = buildTree(iter, f);
+        Node<T> right = buildTree(iter, f);
+        return new Node<>(f.apply(val), left, right);
+    }
+
+    public static <T> void formatTree(Node<T> root, List<String> out) {
+        if (root == null) {
+            out.add("x");
+            return;
+        }
+        out.add(root.val.toString());
+        formatTree(root.left, out);
+        formatTree(root.right, out);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Node<Integer> root = buildTree(splitWords(scanner.nextLine()).iterator(), Integer::parseInt);
+        int val = scanner.nextInt();
+        scanner.close();
+        Node<Integer> res = insertBst(root, val);
+        List<String> resArr = new ArrayList<>();
+        formatTree(res, resArr);
+        System.out.println(String.join(" ", resArr));
+    }
+}
