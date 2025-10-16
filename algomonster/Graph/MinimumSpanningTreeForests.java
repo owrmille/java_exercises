@@ -11,6 +11,7 @@ public class MinimumSpanningTreeForests {
     public static class UnionFind<T> {
         private Map<T, T> childParentMap = new HashMap<>();
 
+        // finds the root of the set
         public T find(T x) {
             // get parent of x -> it may be already representative of the set
             T rootCandidate = childParentMap.getOrDefault(x, x);
@@ -22,30 +23,35 @@ public class MinimumSpanningTreeForests {
             return rootCandidate;
         }
 
-        public void union(T x, T newCommonRoot) {
-            // if x from set 1, and newCommonRoot from set 2 (sets are not connected), 
+        // unite two sets approaching them by two elements of them
+        public void union(T x, T elemWithNewCommonRoot) {
+            // if x from set 1, and elemWithNewCommonRoot from set 2 (sets are not connected), 
             // then root of set 2 becomes common root for united sets, and root of set 1 becomes 2's child
-            childParentMap.put(find(x), find(newCommonRoot));
+            childParentMap.put(find(x), find(elemWithNewCommonRoot));
         }
 
     }
 
     public static int mstForest(int treesNum, List<List<Integer>> pairs) {
         // attention : treesNum is not useful here
+
+        // 0. create UnionFind structure, and create and initialize minNumFences
         int minNumFences = 0;
         UnionFind<Integer> mstUnionFind = new UnionFind<>();
 
-        // 1. sort edges by weights (idx=0 - first vertex, idx=1 - second vertex, idx=2 - weight/distance)
+        // 1. sort edges by weights (idx=0 - first vertex, idx=1 - second vertex, idx=2 - weight/distance of edge between them)
         Collections.sort(pairs, (a, b) -> a.get(2).compareTo(b.get(2)));
 
         // 2. try every edge 
         for (int i = 0; i < pairs.size(); i++) {
+
+            // 2.1 extract values for both vertices and weight of the edge between them (for convenience)
             int a = pairs.get(i).get(0);
             int b = pairs.get(i).get(1);
             int w = pairs.get(i).get(2);
 
-            // 3. if both vertices of the edge are not in the same set (i.e. are not having the same representative (root), i.e. are not connected by some path).
-            // then add new edge to the graph
+            // 3. if both vertices of the edge are not in the same set (i.e. are not having the same representative (root), i.e. are not connected by some path),
+            // then add new edge to the graph -> add it to minimum spanning tee that we are forming
             if (mstUnionFind.find(a) != mstUnionFind.find(b)) {
                 mstUnionFind.union(a, b);
                 minNumFences += w;
@@ -55,7 +61,6 @@ public class MinimumSpanningTreeForests {
                 // -> there is no early termination
             }
         }
-        
         return minNumFences;
     }
 
