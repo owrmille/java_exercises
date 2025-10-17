@@ -30,6 +30,36 @@ public class KClosestPoints {
         }
         return res;
     }
+
+    private static int distanceToOriginForMaxHeap(List<Integer> p) {
+        // "-" for max heap
+        return - (p.get(0) * p.get(0) + p.get(1) * p.get(1));
+    }
+
+    // max heap
+    public static List<List<Integer>> kClosestPoints2(List<List<Integer>> points, int k) {
+        PriorityQueue<List<Integer>> maxHeap = new PriorityQueue<>(k, (p1, p2) -> distanceToOriginForMaxHeap(p1) - distanceToOriginForMaxHeap(p2));
+
+        for (int i = 0; i < k; i++) {
+            maxHeap.add(points.get(i));
+        }
+
+        for (int i = k; i < points.size(); i++) {
+            List<Integer> point = points.get(i);
+            List<Integer> furthestPointInHeap = maxHeap.peek();
+            if (distanceToOriginForMaxHeap(furthestPointInHeap) < distanceToOriginForMaxHeap(point)) {
+                maxHeap.poll();
+                maxHeap.add(point);
+            }
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            res.add(maxHeap.poll());
+        }
+        return res;
+    }
+
     public static List<String> splitWords(String s) {
         return s.isEmpty() ? List.of() : Arrays.asList(s.split(" "));
     }
@@ -45,7 +75,10 @@ public class KClosestPoints {
         scanner.close();
 
         // using min heap:
-        List<List<Integer>> res = kClosestPoints(points, k);
+        // List<List<Integer>> res = kClosestPoints(points, k);
+
+        // using max heap:
+        List<List<Integer>> res = kClosestPoints2(points, k);
 
         for (List<Integer> el : res) {
             System.out.println(el.stream().map(String::valueOf).collect(Collectors.joining(" ")));
