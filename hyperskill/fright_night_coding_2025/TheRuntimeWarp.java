@@ -5,6 +5,13 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/* You will receive a list of four-dimensional vectors, where each vector consists of four integers. Your goal is to calculate the total distance traveled through these vectors in sequence:
+1. Calculate the Euclidean distance between each consecutive pair of vectors (first to second, second to third, third to fourth, etc.).
+2. If any distance is not a whole number, round it up to the nearest integer.
+3. Add all the rounded up distances together to get your final answer.
+
+You can use the Euclidean distance formula for 4D vectors: https://en.wikipedia.org/wiki/Euclidean_distance
+ */
 public class TheRuntimeWarp {
     public static long calculateTotalDistance(List<List<Integer>> coords) {
         long totalDistance = 0;

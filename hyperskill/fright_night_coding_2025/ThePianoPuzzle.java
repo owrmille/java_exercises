@@ -7,6 +7,25 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/* You are doing well so far. Hang in there. This piano is special. 
+I retrieved it from some abandoned school. You see, it had some 
+stupid bird-related puzzle attached to it. I got rid of all that 
+boring stuff, and reprogrammed it to use another sequence. 
+Your clue is on the other side of this note. 
+Find the shortest sequence that contains all 7 notes, and play it
+to get the key.
+
+The seven notes are A, B, C, D, E, F, G.
+
+For example, with the following dataset: ADCEEFAGABDC the answer 
+would be EFAGABDC, since it has all 7 notes in it and it's the 
+shortest sequence like that.
+
+In the case of several sequences of the same length, you will 
+need to choose the one that appears in the dataset first.
+ */
+
+
 public class ThePianoPuzzle {
     public static List<String> letters = Stream.of("A", "B", "C", "D", "E", "F", "G").collect(Collectors.toList());
     

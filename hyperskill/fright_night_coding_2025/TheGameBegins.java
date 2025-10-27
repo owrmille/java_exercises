@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/* The figure faded and a set of instructions appeared on the screen:
+
+The clue is in unique letters. */
+
 public class TheGameBegins {
    public static void main(String[] args) {
     try (Scanner scanner = new Scanner(new File("datasets/hyperskill-dataset-117336623.txt"))) {

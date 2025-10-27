@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+/* There is a panel with 10 digits and a brief instruction:
+
+The code to the gates is four digits. It is the first, the second, the third and the fourth most common digit 
+in today's sequence, in that particular order. If there are equal number of appearances, higher digit should come first.
+ */
 public class TheWrongTurn {
     public static void printFourMostCommonDigits(List<Integer> nums) {
         Map<Integer, Integer> numsMap = new HashMap<>();
