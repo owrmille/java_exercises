@@ -12,22 +12,24 @@ public class DictionaryOfSynonyms {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        Map<String, String> dict1 = new HashMap<>();
+        StringTokenizer st;
+        Map<String, String> synonyms = new HashMap<>();
 
         int n = Integer.parseInt(reader.readLine());
+
         for (int i = 0; i < n; i++) {
             String line = reader.readLine();
-            StringTokenizer st = new StringTokenizer(line);
+            st = new StringTokenizer(line);
             
             String word1 = st.nextToken();
             String word2 = st.nextToken();
 
-            dict1.put(word1, word2);
-            dict1.put(word2, word1);
+            synonyms.put(word1, word2);
+            synonyms.put(word2, word1);
         }
 
         String word = reader.readLine();
-        writer.write(dict1.get(word));
+        writer.write(synonyms.get(word));
         
         reader.close();
         writer.close();
