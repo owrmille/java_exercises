@@ -21,10 +21,14 @@ public class Isogram {
         return true;
     }
 
+    public static boolean isIsogram_upd(String str) {
+        return str.length() == str.toLowerCase().chars().distinct().count();
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String str = scanner.nextLine();
         scanner.close();
-        System.out.println(isIsogram(str));
+        System.out.println(isIsogram_upd(str));
     }
 }
